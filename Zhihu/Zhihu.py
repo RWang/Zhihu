@@ -5,8 +5,8 @@ import re
 import HTMLParser
 import sys
 
-reload(sys)
-sys.setdefaultencoding('utf-8')
+#reload(sys)
+#sys.setdefaultencoding('utf-8')
 
 
 
@@ -87,7 +87,7 @@ def main():
         for url in urls:
             try:
                 getContent(url)
-            except Exception,e:
+            except Exception as e:
                 print(e)
 
 main()
