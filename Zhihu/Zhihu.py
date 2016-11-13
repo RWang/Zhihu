@@ -1,5 +1,11 @@
 # -*- coding:utf-8 -*-
 
+
+#Bugs list:
+#1. Occasionally "gbk" encoding error.
+#2. Content cannot be displayed without tag "<p>".
+#3. Unkonw reason, author cannot be displayed sometimes.
+
 import urllib.request
 import re
 import sys
@@ -118,7 +124,8 @@ def main():
             except Exception as e:
                 print(e)
 
-    #urls = '<p>知乎用户，</span><span class="bio">墨尔本外科住院医生，英澳两国执业</span></div></p>'
+    #urls = '匿名用户</span></div>'
+    #text = '没有Tag p 的文字。'
     #print(htmltagfilter(urls))
     #print(characterProcessing(urls))
 
