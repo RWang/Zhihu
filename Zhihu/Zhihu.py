@@ -2,12 +2,11 @@
 
 import urllib.request
 import re
-import HTMLParser
 import sys
+from html.parser import HTMLParser
 
 #reload(sys)
 #sys.setdefaultencoding('utf-8')
-
 
 
 def getHtml(url):
@@ -19,7 +18,7 @@ def getHtml(url):
 
 def getUrls(html):
     pattern = re.compile('http://daily.zhihu.com/story/(.*?)',re.S)
-    items = re.findall(pattern,html)
+    items = re.findall(pattern,html.decode('utf-8'))
     urls = []
     for item in items:
         urls.append('http://daily.zhihu.com/story/' +item)
@@ -28,7 +27,7 @@ def getUrls(html):
 
 
 def getContent(url):
-    html = getHtml(url)
+    html = getHtml(url).decode()
     pattern = re.compile('<h1 class= "headline-title">(.*?)</h1>')
     items = re.findall(pattern,html)
     print('***************************************************')
@@ -44,9 +43,9 @@ def getContent(url):
 
 
 def characterProcessing(html):
-    htmlParser = HTMLParser.HTMLParser()
+    htmlParser = HTMLParser()
     pattern = re.compile('<p>(.*?)</p>|<li>(.*?)</li>.*?',re.S)
-    items = re.findall(pattern.html)
+    items = re.findall(pattern,html.decode())
     result = []
     for index in items:
         if index != '':
@@ -60,7 +59,7 @@ def characterProcessing(html):
                     continue
                 elif tag:
                     pattern = re.comppile('(.*?)<.*?>(.*?)</.*?>(.*)')
-                    items = re.findall(pattern.content)
+                    items = re.findall(pattern,content)
                     content_tags = ''
                     if len(items) > 0:
                         for item in items:
@@ -81,7 +80,7 @@ def characterProcessing(html):
 def main():
     for i in range(1,5):
         print('page%s'%i)
-        url = "http://zhihudaily.ahorn.me/page/&s"%i
+        url = "http://zhihudaily.ahorn.me/page/%s"%i
         html = getHtml(url)
         urls = getUrls(html)
         for url in urls:
